@@ -1,0 +1,39 @@
+[
+  {
+    "arguments": [
+      "/home/elias/emsdk/upstream/bin/clang",
+      "-target",
+      "wasm32-unknown-emscripten",
+      "-fignore-exceptions",
+      "-mllvm",
+      "-combiner-global-alias-analysis=false",
+      "-mllvm",
+      "-enable-emscripten-sjlj",
+      "-mllvm",
+      "-disable-lsr",
+      "--sysroot=/home/elias/emsdk/upstream/emscripten/cache/sysroot",
+      "-DEMSCRIPTEN",
+      "-Werror=implicit-function-declaration",
+      "-isystem",
+      "/home/elias/emsdk/upstream/emscripten/cache/sysroot/include/freetype2",
+      "-isystem",
+      "/home/elias/emsdk/upstream/emscripten/cache/sysroot/include/harfbuzz",
+      "-isystem",
+      "/home/elias/emsdk/upstream/emscripten/cache/sysroot/include/SDL2",
+      "-DTTF_USE_HARFBUZZ=1",
+      "-Xclang",
+      "-iwithsysroot/include/compat",
+      "-std=gnu23",
+      "-Wall",
+      "-Wextra",
+      "-O2",
+      "-c",
+      "-o",
+      "obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/elias/projects/web_terminal",
+    "file": "/home/elias/projects/web_terminal/src/main.c",
+    "output": "/home/elias/projects/web_terminal/obj/main.o"
+  }
+]
