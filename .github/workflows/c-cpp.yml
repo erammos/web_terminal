@@ -12,5 +12,11 @@ jobs:
     steps:
       - uses: mymindstorm/setup-emsdk@v14
       - name: Verify
+        run: emcc -v
+      - uses: actions/checkout@v4
+      - name: Make
         run: emmake make
+        
+      
+
       
