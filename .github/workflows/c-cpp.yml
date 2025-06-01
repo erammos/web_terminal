@@ -16,6 +16,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Make
         run: emmake make
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+             name: web_terminal
+             path: ${{github.workspace}}/bin/ 
+    
+          
         
       
 
