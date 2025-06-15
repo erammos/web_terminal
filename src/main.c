@@ -1,6 +1,7 @@
 #include "SDL_events.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <wchar.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -35,7 +36,7 @@ float aspect_ratio = SCREEN_WIDTH / (float)SCREEN_HEIGHT;
 size_t current_line = 0;
 size_t total_lines = 0;
 
-#define LS "Documents  about.txt  download-cv.sh"
+#define LS "Documents  about.txt  linkedin.sh"
 #define PUSH(x) push_text(x, strlen(x))
 const char logo[] = {
 #embed "../assets/banner.txt"
@@ -48,22 +49,37 @@ const char about[] = {
 };
 char *track_lines[MAX_LINES] = { 0 };
 
-void log_file_download(const char* file_name) {
-    // Directly use Firebase Analytics inside EM_ASM
+void log_file_download(const char *file_name)
+{
+	// Directly use Firebase Analytics inside EM_ASM
 #ifdef __EMSCRIPTEN__
-   EM_ASM({
-        var fileName = UTF8ToString($0);
-        Module.logDownloadEventFromC(fileName);
-    }, file_name);
+	EM_ASM(
+		{
+			var fileName = UTF8ToString($0);
+			Module.logDownloadEventFromC(fileName);
+		},
+		file_name);
 #endif
 }
+
+void open_url(const char *url)
+{
+#ifdef __EMSCRIPTEN__
+	EM_ASM(
+		{
+			var url = UTF8ToString($0);
+			window.open(url, "_self");
+		},
+		url);
+#endif
+}
+
 void download_file(const char *url)
 {
 #ifdef __EMSCRIPTEN__
 	EM_ASM(
 		{
 			var url = UTF8ToString($0);
-
 			// Create a temporary link and trigger the download
 			var link = document.createElement('a');
 			link.href = url;
@@ -231,9 +247,8 @@ void main_loop()
 				} else if (strcmp(input, "cat about.txt") ==
 					   0) {
 					PUSH(about);
-				} else if (strcmp(input, "./download-cv.sh") ==
-					   0) {
-					download_file("/assets/er2024cv.pdf");
+				} else if (strcmp(input, "./linkedin.sh") == 0) {
+					open_url("https://www.linkedin.com/in/elias-rammos-b3548739");
 				} else if (input_len > 0) {
 					PUSH("Unknown command :-P");
 				}
